@@ -2,11 +2,10 @@
 
 WIP
 
-Parcel, hookrouter, suspense, material ui setup
+Parcel, hookrouter, suspense
 
 https://parceljs.org/typeScript.html
 https://github.com/Paratron/hookrouter/
-https://material-ui.com/
 
 ```make deps run```
 
