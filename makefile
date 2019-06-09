@@ -1,4 +1,3 @@
-
 make:
 	vim ./makefile
 
@@ -10,13 +9,7 @@ get_yarn:
 
 deps:
 	rm -rf node_modules
-	yarn add prettier --dev --exact
-	yarn add react
-	yarn add react-dom
-	yarn add hookrouter
-	yarn add @types/hookrouter
-	yarn add --dev typescript
-	yarn add --dev parcel-bundler
+	yarn install
 
 watch:
 	yarn watch
