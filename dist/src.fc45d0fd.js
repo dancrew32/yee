@@ -37561,32 +37561,32 @@ var hookrouter_1 = require("hookrouter");
 
 var Home = react_1.lazy(function () {
   return Promise.resolve().then(function () {
-    return __importStar(require('./home.tsx'));
+    return __importStar(require("./home.tsx"));
   });
 });
 var About = react_1.lazy(function () {
   return Promise.resolve().then(function () {
-    return __importStar(require('./about.tsx'));
+    return __importStar(require("./about.tsx"));
   });
 });
 var NotFound = react_1.lazy(function () {
   return Promise.resolve().then(function () {
-    return __importStar(require('./404.tsx'));
+    return __importStar(require("./404.tsx"));
   });
 });
 var routes = {
-  '/': function _() {
+  "/": function _() {
     return react_1["default"].createElement(Home, null);
   },
-  '/about': function about() {
+  "/about": function about() {
     return react_1["default"].createElement(About, null);
   },
-  '/products': function products() {
+  "/products": function products() {
     return react_1["default"].createElement("div", null, "products ", react_1["default"].createElement(hookrouter_1.A, {
       href: "/products/99"
     }, "99"));
   },
-  '/products/:id': function productsId(_a) {
+  "/products/:id": function productsId(_a) {
     var id = _a.id;
     return react_1["default"].createElement("div", null, "product ", id);
   }
@@ -37600,7 +37600,6 @@ function AppRouter() {
 }
 
 exports.AppRouter = AppRouter;
-;
 },{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","./home.tsx":"src/home.tsx","./about.tsx":"src/about.tsx","./404.tsx":"src/404.tsx"}],"src/index.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -37624,7 +37623,7 @@ function App() {
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(CssBaseline_1["default"], null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
 }
 
-react_dom_1["default"].render(react_1["default"].createElement(App, null), document.getElementById('app'));
+react_dom_1["default"].render(react_1["default"].createElement(App, null), document.getElementById("app"));
 },{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","@material-ui/core/CssBaseline":"node_modules/@material-ui/core/esm/CssBaseline/index.js","./app_router.tsx":"src/app_router.tsx"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

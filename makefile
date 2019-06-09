@@ -10,6 +10,7 @@ get_yarn:
 
 deps:
 	rm -rf node_modules
+	yarn add prettier --dev --exact
 	yarn add react
 	yarn add react-dom
 	yarn add @material-ui/core
@@ -20,3 +21,9 @@ deps:
 
 run:
 	yarn start
+
+pretty:
+	yarn pretty
+
+checkin:
+	git commit -am "checkin" && git push
