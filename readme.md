@@ -7,6 +7,6 @@ Parcel, hookrouter, suspense
 https://parceljs.org/typeScript.html
 https://github.com/Paratron/hookrouter/
 
-```make deps run```
+```make deps watch```
 
 http://localhost:1234/

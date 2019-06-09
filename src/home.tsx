@@ -1,5 +1,7 @@
 import React from "react";
 
+import md from "./home.md";
+
 export default function Home() {
-  return <div>Home</div>;
+  return <article dangerouslySetInnerHTML={{ __html: md }} />;
 }

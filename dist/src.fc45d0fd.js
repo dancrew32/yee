@@ -28498,7 +28498,62 @@ var _router = require("./router");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"src/nav.tsx":[function(require,module,exports) {
+},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function toVal(mix) {
+  var k,
+      y,
+      str = '';
+
+  if (mix) {
+    if (_typeof(mix) === 'object') {
+      if (!!mix.push) {
+        for (k = 0; k < mix.length; k++) {
+          if (mix[k] && (y = toVal(mix[k]))) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      } else {
+        for (k in mix) {
+          if (mix[k] && (y = toVal(k))) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      }
+    } else if (typeof mix !== 'boolean' && !mix.call) {
+      str && (str += ' ');
+      str += mix;
+    }
+  }
+
+  return str;
+}
+
+function _default() {
+  var i = 0,
+      x,
+      str = '';
+
+  while (i < arguments.length) {
+    if (x = toVal(arguments[i++])) {
+      str && (str += ' ');
+      str += x;
+    }
+  }
+
+  return str;
+}
+},{}],"src/nav.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28513,16 +28568,36 @@ var react_1 = __importDefault(require("react"));
 
 var hookrouter_1 = require("hookrouter");
 
-exports.Nav = function () {
-  return react_1["default"].createElement("nav", null, react_1["default"].createElement(hookrouter_1.A, {
-    href: "/"
-  }, "Home"), react_1["default"].createElement(hookrouter_1.A, {
-    href: "/about"
-  }, "About"), react_1["default"].createElement(hookrouter_1.A, {
-    href: "/products"
-  }, "Products"));
+var clsx_1 = __importDefault(require("clsx"));
+
+var pathToText = [{
+  href: "/",
+  text: "Home"
+}, {
+  href: "/about",
+  text: "About"
+}, {
+  href: "/products",
+  text: "Products"
+}];
+
+var getClasses = function getClasses(a, b) {
+  return clsx_1["default"]({
+    active: a.split("/")[1] === b.split("/")[1]
+  });
 };
-},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js"}],"src/home.tsx":[function(require,module,exports) {
+
+exports.Nav = function () {
+  var path = hookrouter_1.usePath();
+  return react_1["default"].createElement("nav", null, pathToText.map(function (item) {
+    return react_1["default"].createElement(hookrouter_1.A, {
+      href: item.href,
+      className: getClasses(path, item.href),
+      key: item.href
+    }, item.text);
+  }));
+};
+},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","clsx":"node_modules/clsx/dist/clsx.m.js"}],"src/home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28535,12 +28610,18 @@ exports.__esModule = true;
 
 var react_1 = __importDefault(require("react"));
 
+var home_md_1 = __importDefault(require("./home.md"));
+
 function Home() {
-  return react_1["default"].createElement("div", null, "Home");
+  return react_1["default"].createElement("article", {
+    dangerouslySetInnerHTML: {
+      __html: home_md_1["default"]
+    }
+  });
 }
 
 exports["default"] = Home;
-},{"react":"node_modules/react/index.js"}],"src/about.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./home.md":"src/home.md"}],"src/about.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28554,7 +28635,7 @@ exports.__esModule = true;
 var react_1 = __importDefault(require("react"));
 
 function About() {
-  return react_1["default"].createElement("div", null, "about");
+  return react_1["default"].createElement("article", null, "about");
 }
 
 exports["default"] = About;
@@ -28574,7 +28655,7 @@ var react_1 = __importDefault(require("react"));
 var hookrouter_1 = require("hookrouter");
 
 function Products() {
-  return react_1["default"].createElement("div", null, "products ", react_1["default"].createElement(hookrouter_1.A, {
+  return react_1["default"].createElement("article", null, "products ", react_1["default"].createElement(hookrouter_1.A, {
     href: "/products/99"
   }, "99"));
 }
@@ -28792,7 +28873,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38481" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46699" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -28967,5 +29048,96 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.tsx"], null)
+},{}],"node_modules/parcel-bundler/src/builtins/bundle-loader.js":[function(require,module,exports) {
+var getBundleURL = require('./bundle-url').getBundleURL;
+
+function loadBundlesLazy(bundles) {
+  if (!Array.isArray(bundles)) {
+    bundles = [bundles];
+  }
+
+  var id = bundles[bundles.length - 1];
+
+  try {
+    return Promise.resolve(require(id));
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return new LazyPromise(function (resolve, reject) {
+        loadBundles(bundles.slice(0, -1)).then(function () {
+          return require(id);
+        }).then(resolve, reject);
+      });
+    }
+
+    throw err;
+  }
+}
+
+function loadBundles(bundles) {
+  return Promise.all(bundles.map(loadBundle));
+}
+
+var bundleLoaders = {};
+
+function registerBundleLoader(type, loader) {
+  bundleLoaders[type] = loader;
+}
+
+module.exports = exports = loadBundlesLazy;
+exports.load = loadBundles;
+exports.register = registerBundleLoader;
+var bundles = {};
+
+function loadBundle(bundle) {
+  var id;
+
+  if (Array.isArray(bundle)) {
+    id = bundle[1];
+    bundle = bundle[0];
+  }
+
+  if (bundles[bundle]) {
+    return bundles[bundle];
+  }
+
+  var type = (bundle.substring(bundle.lastIndexOf('.') + 1, bundle.length) || bundle).toLowerCase();
+  var bundleLoader = bundleLoaders[type];
+
+  if (bundleLoader) {
+    return bundles[bundle] = bundleLoader(getBundleURL() + bundle).then(function (resolved) {
+      if (resolved) {
+        module.bundle.register(id, resolved);
+      }
+
+      return resolved;
+    }).catch(function (e) {
+      delete bundles[bundle];
+      throw e;
+    });
+  }
+}
+
+function LazyPromise(executor) {
+  this.executor = executor;
+  this.promise = null;
+}
+
+LazyPromise.prototype.then = function (onSuccess, onError) {
+  if (this.promise === null) this.promise = new Promise(this.executor);
+  return this.promise.then(onSuccess, onError);
+};
+
+LazyPromise.prototype.catch = function (onError) {
+  if (this.promise === null) this.promise = new Promise(this.executor);
+  return this.promise.catch(onError);
+};
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/loaders/browser/html-loader.js":[function(require,module,exports) {
+module.exports = function loadHTMLBundle(bundle) {
+  return fetch(bundle).then(function (res) {
+    return res.text();
+  });
+};
+},{}],0:[function(require,module,exports) {
+var b=require("node_modules/parcel-bundler/src/builtins/bundle-loader.js");b.register("html",require("node_modules/parcel-bundler/src/builtins/loaders/browser/html-loader.js"));b.load([["home.c712eb89.html","src/home.md"]]).then(function(){require("src/index.tsx");});
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js",0], null)
 //# sourceMappingURL=/src.fc45d0fd.js.map

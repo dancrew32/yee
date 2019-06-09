@@ -18,8 +18,11 @@ deps:
 	yarn add --dev typescript
 	yarn add --dev parcel-bundler
 
-run:
-	yarn start
+watch:
+	yarn watch
+
+build:
+	yarn build
 
 pretty:
 	yarn pretty
