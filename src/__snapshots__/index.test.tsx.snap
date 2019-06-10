@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> should snapshot 1`] = `
+<div>
+  <nav>
+    <a
+      className="active"
+      href="/"
+      onClick={[Function]}
+    >
+      Home
+    </a>
+    <a
+      className=""
+      href="/about"
+      onClick={[Function]}
+    >
+      About
+    </a>
+    <a
+      className=""
+      href="/products"
+      onClick={[Function]}
+    >
+      Products
+    </a>
+  </nav>
+  <div>
+    Loading...
+  </div>
+</div>
+`;

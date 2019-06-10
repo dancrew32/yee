@@ -24,4 +24,4 @@ pretty:
 	yarn pretty
 
 checkin: pretty test
-	git commit -am "checkin" && git push
+	git add -A && git commit && git push
