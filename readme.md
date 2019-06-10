@@ -1,12 +1,21 @@
-## Yee
+# Yee
 
-WIP
+Parcel, hookrouter, suspense, jest, practical app starter.
 
-Parcel, hookrouter, suspense
+## Build Status:
 
-https://parceljs.org/typeScript.html
-https://github.com/Paratron/hookrouter/
+[![Build Status](https://travis-ci.org/dancrew32/yee.svg?branch=master)](https://travis-ci.org/dancrew32/yee)
 
-```make deps watch```
+## Install:
+
+```bash
+make deps watch
+```
 
 http://localhost:1234/
+
+## Test:
+
+```bash
+make test
+```
