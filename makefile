@@ -17,8 +17,11 @@ watch:
 build:
 	yarn build
 
+test:
+	yarn test
+
 pretty:
 	yarn pretty
 
-checkin: pretty
+checkin: pretty test
 	git commit -am "checkin" && git push

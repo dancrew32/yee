@@ -28840,11 +28840,12 @@ var app_router_tsx_1 = require("./app_router.tsx");
 
 require("./main.less");
 
-var App = function App() {
+exports.App = function () {
   return react_1["default"].createElement("div", null, react_1["default"].createElement(nav_tsx_1.Nav, null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
 };
 
-react_dom_1["default"].render(react_1["default"].createElement(App, null), document.getElementById("app"));
+var node = document.getElementById("app");
+node && react_dom_1["default"].render(react_1["default"].createElement(exports.App, null), node);
 },{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./nav.tsx":"src/nav.tsx","./app_router.tsx":"src/app_router.tsx","./main.less":"src/main.less"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

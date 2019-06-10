@@ -5,11 +5,12 @@ import { Nav } from "./nav.tsx";
 import { AppRouter } from "./app_router.tsx";
 import "./main.less";
 
-const App = () => (
+export const App = () => (
   <div>
     <Nav />
     <AppRouter />
   </div>
 );
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const node = document.getElementById("app");
+node && ReactDOM.render(<App />, node);
