@@ -28498,106 +28498,7 @@ var _router = require("./router");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _default;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function toVal(mix) {
-  var k,
-      y,
-      str = '';
-
-  if (mix) {
-    if (_typeof(mix) === 'object') {
-      if (!!mix.push) {
-        for (k = 0; k < mix.length; k++) {
-          if (mix[k] && (y = toVal(mix[k]))) {
-            str && (str += ' ');
-            str += y;
-          }
-        }
-      } else {
-        for (k in mix) {
-          if (mix[k] && (y = toVal(k))) {
-            str && (str += ' ');
-            str += y;
-          }
-        }
-      }
-    } else if (typeof mix !== 'boolean' && !mix.call) {
-      str && (str += ' ');
-      str += mix;
-    }
-  }
-
-  return str;
-}
-
-function _default() {
-  var i = 0,
-      x,
-      str = '';
-
-  while (i < arguments.length) {
-    if (x = toVal(arguments[i++])) {
-      str && (str += ' ');
-      str += x;
-    }
-  }
-
-  return str;
-}
-},{}],"src/nav.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-exports.__esModule = true;
-
-var react_1 = __importDefault(require("react"));
-
-var hookrouter_1 = require("hookrouter");
-
-var clsx_1 = __importDefault(require("clsx"));
-
-var pathToText = [{
-  href: "/",
-  text: "Home"
-}, {
-  href: "/about",
-  text: "About"
-}, {
-  href: "/products",
-  text: "Products"
-}];
-
-var getClasses = function getClasses(a, b) {
-  return clsx_1["default"]({
-    active: a.split("/")[1] === b.split("/")[1]
-  });
-};
-
-exports.Nav = function () {
-  var path = hookrouter_1.usePath();
-  return react_1["default"].createElement("nav", null, pathToText.map(function (item) {
-    return react_1["default"].createElement(hookrouter_1.A, {
-      href: item.href,
-      className: getClasses(path, item.href),
-      key: item.href
-    }, item.text);
-  }));
-};
-},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","clsx":"node_modules/clsx/dist/clsx.m.js"}],"src/home.tsx":[function(require,module,exports) {
+},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"src/home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28621,7 +28522,75 @@ function Home() {
 }
 
 exports["default"] = Home;
-},{"react":"node_modules/react/index.js","./home.md":"src/home.md"}],"src/about.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./home.md":"src/home.md"}],"src/app_store.tsx":[function(require,module,exports) {
+"use strict";
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+exports.__esModule = true;
+
+var react_1 = __importStar(require("react"));
+
+var initialState = {
+  count: 0
+};
+var AppContext = react_1.createContext({});
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case "INC":
+      return __assign({}, state, {
+        count: state.count + 1
+      });
+
+    case "DEC":
+      return __assign({}, state, {
+        count: state.count - 1
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.Provider = function (props) {
+  var _a = react_1.useReducer(reducer, initialState),
+      state = _a[0],
+      dispatch = _a[1];
+
+  return react_1["default"].createElement(AppContext.Provider, {
+    value: [state, dispatch]
+  }, props.children);
+};
+
+exports.useStore = function () {
+  return react_1.useContext(AppContext);
+};
+},{"react":"node_modules/react/index.js"}],"src/about.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28634,12 +28603,30 @@ exports.__esModule = true;
 
 var react_1 = __importDefault(require("react"));
 
+var app_store_tsx_1 = require("./app_store.tsx");
+
 function About() {
-  return react_1["default"].createElement("article", null, "about");
+  var _a = app_store_tsx_1.useStore(),
+      state = _a[0],
+      dispatch = _a[1];
+
+  return react_1["default"].createElement("article", null, JSON.stringify(state), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return dispatch({
+        type: "INC"
+      });
+    }
+  }, "+"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return dispatch({
+        type: "DEC"
+      });
+    }
+  }, "-"));
 }
 
 exports["default"] = About;
-},{"react":"node_modules/react/index.js"}],"src/products.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./app_store.tsx":"src/app_store.tsx"}],"src/products.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28747,7 +28734,106 @@ function AppRouter() {
 }
 
 exports.AppRouter = AppRouter;
-},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","./home.tsx":"src/home.tsx","./about.tsx":"src/about.tsx","./products.tsx":"src/products.tsx","./404.tsx":"src/404.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","./home.tsx":"src/home.tsx","./about.tsx":"src/about.tsx","./products.tsx":"src/products.tsx","./404.tsx":"src/404.tsx"}],"node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function toVal(mix) {
+  var k,
+      y,
+      str = '';
+
+  if (mix) {
+    if (_typeof(mix) === 'object') {
+      if (!!mix.push) {
+        for (k = 0; k < mix.length; k++) {
+          if (mix[k] && (y = toVal(mix[k]))) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      } else {
+        for (k in mix) {
+          if (mix[k] && (y = toVal(k))) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      }
+    } else if (typeof mix !== 'boolean' && !mix.call) {
+      str && (str += ' ');
+      str += mix;
+    }
+  }
+
+  return str;
+}
+
+function _default() {
+  var i = 0,
+      x,
+      str = '';
+
+  while (i < arguments.length) {
+    if (x = toVal(arguments[i++])) {
+      str && (str += ' ');
+      str += x;
+    }
+  }
+
+  return str;
+}
+},{}],"src/nav.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+exports.__esModule = true;
+
+var react_1 = __importDefault(require("react"));
+
+var hookrouter_1 = require("hookrouter");
+
+var clsx_1 = __importDefault(require("clsx"));
+
+var pathToText = [{
+  href: "/",
+  text: "Home"
+}, {
+  href: "/about",
+  text: "About"
+}, {
+  href: "/products",
+  text: "Products"
+}];
+
+var getClasses = function getClasses(a, b) {
+  return clsx_1["default"]({
+    active: a.split("/")[1] === b.split("/")[1]
+  });
+};
+
+exports.Nav = function () {
+  var path = hookrouter_1.usePath();
+  return react_1["default"].createElement("nav", null, pathToText.map(function (item) {
+    return react_1["default"].createElement(hookrouter_1.A, {
+      href: item.href,
+      className: getClasses(path, item.href),
+      key: item.href
+    }, item.text);
+  }));
+};
+},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","clsx":"node_modules/clsx/dist/clsx.m.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -28834,19 +28920,21 @@ var react_1 = __importDefault(require("react"));
 
 var react_dom_1 = __importDefault(require("react-dom"));
 
-var nav_tsx_1 = require("./nav.tsx");
-
 var app_router_tsx_1 = require("./app_router.tsx");
+
+var app_store_tsx_1 = require("./app_store.tsx");
+
+var nav_tsx_1 = require("./nav.tsx");
 
 require("./main.less");
 
 exports.App = function () {
-  return react_1["default"].createElement("div", null, react_1["default"].createElement(nav_tsx_1.Nav, null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
+  return react_1["default"].createElement(app_store_tsx_1.Provider, null, react_1["default"].createElement(nav_tsx_1.Nav, null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
 };
 
 var node = document.getElementById("app");
 node && react_dom_1["default"].render(react_1["default"].createElement(exports.App, null), node);
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./nav.tsx":"src/nav.tsx","./app_router.tsx":"src/app_router.tsx","./main.less":"src/main.less"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./app_router.tsx":"src/app_router.tsx","./app_store.tsx":"src/app_store.tsx","./nav.tsx":"src/nav.tsx","./main.less":"src/main.less"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -28874,7 +28962,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46699" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44435" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

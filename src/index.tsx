@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Nav } from "./nav.tsx";
 import { AppRouter } from "./app_router.tsx";
+import { Provider } from "./app_store.tsx";
+import { Nav } from "./nav.tsx";
 import "./main.less";
 
 export const App = () => (
-  <div>
+  <Provider>
     <Nav />
     <AppRouter />
-  </div>
+  </Provider>
 );
 
 const node = document.getElementById("app");

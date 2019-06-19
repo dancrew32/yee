@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should snapshot 1`] = `
-<div>
+Array [
   <nav>
     <a
       className="active"
@@ -24,9 +24,9 @@ exports[`<App /> should snapshot 1`] = `
     >
       Products
     </a>
-  </nav>
+  </nav>,
   <div>
     Loading...
-  </div>
-</div>
+  </div>,
+]
 `;
