@@ -2,10 +2,12 @@ import React, { createContext, useContext, useReducer } from "react";
 
 type ActionType = {
   type: string;
+  thing?: string;
 };
 
 type AppStateType = {
   count: 0;
+  things: Array<strings>;
 };
 
 type AppContextType = {};
@@ -15,7 +17,8 @@ type ProviderPropsType = {
 };
 
 const initialState: AppStateType = {
-  count: 0
+  count: 0,
+  things: []
 };
 
 const AppContext = createContext<AppContextType>({});
@@ -26,6 +29,13 @@ const reducer = (state: AppStateType, action: ActionType) => {
       return { ...state, count: state.count + 1 };
     case "DEC":
       return { ...state, count: state.count - 1 };
+    case "ADD_THING":
+      return { ...state, things: [...state.things, action.thing] };
+    case "REMOVE_THING":
+      return {
+        ...state,
+        things: state.things.filter(thing => thing !== action.thing)
+      };
     default:
       return state;
   }

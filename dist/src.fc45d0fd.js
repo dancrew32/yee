@@ -28556,7 +28556,8 @@ exports.__esModule = true;
 var react_1 = __importStar(require("react"));
 
 var initialState = {
-  count: 0
+  count: 0,
+  things: []
 };
 var AppContext = react_1.createContext({});
 
@@ -28570,6 +28571,18 @@ var reducer = function reducer(state, action) {
     case "DEC":
       return __assign({}, state, {
         count: state.count - 1
+      });
+
+    case "ADD_THING":
+      return __assign({}, state, {
+        things: state.things.concat([action.thing])
+      });
+
+    case "REMOVE_THING":
+      return __assign({}, state, {
+        things: state.things.filter(function (thing) {
+          return thing !== action.thing;
+        })
       });
 
     default:
@@ -28605,24 +28618,44 @@ var react_1 = __importDefault(require("react"));
 
 var app_store_tsx_1 = require("./app_store.tsx");
 
+var plus = function plus(dispatch) {
+  dispatch({
+    type: "INC"
+  });
+  dispatch({
+    type: "ADD_THING",
+    thing: Math.random()
+  });
+};
+
+var minus = function minus(dispatch, thing) {
+  dispatch({
+    type: "DEC"
+  });
+  dispatch({
+    type: "REMOVE_THING",
+    thing: thing
+  });
+};
+
 function About() {
   var _a = app_store_tsx_1.useStore(),
       state = _a[0],
       dispatch = _a[1];
 
-  return react_1["default"].createElement("article", null, JSON.stringify(state), react_1["default"].createElement("button", {
+  return react_1["default"].createElement("article", null, state.count, state.things.map(function (thing) {
+    return react_1["default"].createElement("div", {
+      key: thing
+    }, thing, react_1["default"].createElement("button", {
+      onClick: function onClick() {
+        minus(dispatch, thing);
+      }
+    }, "-"));
+  }), react_1["default"].createElement("button", {
     onClick: function onClick() {
-      return dispatch({
-        type: "INC"
-      });
+      plus(dispatch);
     }
-  }, "+"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return dispatch({
-        type: "DEC"
-      });
-    }
-  }, "-"));
+  }, "+"));
 }
 
 exports["default"] = About;
