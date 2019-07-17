@@ -10,7 +10,9 @@
     "clsx": "^1.0.4",
     "hookrouter": "^1.2.3",
     "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-three-fiber": "^2.2.11",
+    "three": "^0.106.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

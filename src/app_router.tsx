@@ -4,6 +4,7 @@ import { useRoutes } from "hookrouter";
 const Home = lazy(() => import("./home.tsx"));
 const About = lazy(() => import("./about.tsx"));
 const Products = lazy(() => import("./products.tsx"));
+const Blender = lazy(() => import("./blender.tsx"));
 const NotFound = lazy(() => import("./404.tsx"));
 
 const Loading = () => <div>Loading...</div>;
@@ -11,6 +12,7 @@ const Loading = () => <div>Loading...</div>;
 const routes = {
   "/": () => <Home />,
   "/about": () => <About />,
+  "/blender": () => <Blender />,
   "/products": () => <Products />,
   "/products/:id": ({ id }) => <div>product {id}</div>
 };
