@@ -28555,11 +28555,11 @@ exports.__esModule = true;
 
 var react_1 = __importStar(require("react"));
 
+var Context = react_1.createContext({});
 var initialState = {
   count: 0,
   things: []
 };
-var AppContext = react_1.createContext({});
 
 var reducer = function reducer(state, action) {
   switch (action.type) {
@@ -28586,22 +28586,25 @@ var reducer = function reducer(state, action) {
       });
 
     default:
-      return state;
+      throw new Error("Invalid action " + action.type);
   }
 };
 
-exports.Provider = function (props) {
+exports.AppProvider = function (props) {
   var _a = react_1.useReducer(reducer, initialState),
-      state = _a[0],
-      dispatch = _a[1];
+      appState = _a[0],
+      appDispatch = _a[1];
 
-  return react_1["default"].createElement(AppContext.Provider, {
-    value: [state, dispatch]
+  return react_1["default"].createElement(Context.Provider, {
+    value: {
+      appState: appState,
+      appDispatch: appDispatch
+    }
   }, props.children);
 };
 
-exports.useStore = function () {
-  return react_1.useContext(AppContext);
+exports.useAppStore = function () {
+  return react_1.useContext(Context);
 };
 },{"react":"node_modules/react/index.js"}],"src/about.tsx":[function(require,module,exports) {
 "use strict";
@@ -28618,42 +28621,45 @@ var react_1 = __importDefault(require("react"));
 
 var app_store_tsx_1 = require("./app_store.tsx");
 
-var plus = function plus(dispatch) {
-  dispatch({
+var plus = function plus(appDispatch) {
+  appDispatch({
     type: "INC"
   });
-  dispatch({
+  appDispatch({
     type: "ADD_THING",
     thing: Math.random()
   });
 };
 
-var minus = function minus(dispatch, thing) {
-  dispatch({
+var minus = function minus(appDispatch, thing) {
+  appDispatch({
     type: "DEC"
   });
-  dispatch({
+  appDispatch({
     type: "REMOVE_THING",
     thing: thing
   });
 };
 
 function About() {
-  var _a = app_store_tsx_1.useStore(),
-      state = _a[0],
-      dispatch = _a[1];
+  var _a = app_store_tsx_1.useAppStore(),
+      appState = _a.appState,
+      appDispatch = _a.appDispatch;
 
-  return react_1["default"].createElement("article", null, state.count, state.things.map(function (thing) {
+  return react_1["default"].createElement("article", null, appState.count, appState.things.map(function (thing) {
     return react_1["default"].createElement("div", {
       key: thing
     }, thing, react_1["default"].createElement("button", {
       onClick: function onClick() {
-        minus(dispatch, thing);
+        appDispatch({
+          type: "fuck"
+        });
+        minus(appDispatch, thing);
       }
     }, "-"));
   }), react_1["default"].createElement("button", {
     onClick: function onClick() {
-      plus(dispatch);
+      plus(appDispatch);
     }
   }, "+"));
 }
@@ -28962,7 +28968,7 @@ var nav_tsx_1 = require("./nav.tsx");
 require("./main.less");
 
 exports.App = function () {
-  return react_1["default"].createElement(app_store_tsx_1.Provider, null, react_1["default"].createElement(nav_tsx_1.Nav, null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
+  return react_1["default"].createElement(app_store_tsx_1.AppProvider, null, react_1["default"].createElement(nav_tsx_1.Nav, null), react_1["default"].createElement(app_router_tsx_1.AppRouter, null));
 };
 
 var node = document.getElementById("app");
@@ -28995,7 +29001,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44435" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38413" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

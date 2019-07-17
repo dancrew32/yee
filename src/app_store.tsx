@@ -1,27 +1,28 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer, ReactNode } from "react";
 
-type ActionType = {
-  type: string;
-  thing?: string;
-};
+type ContextType = {};
 
 type AppStateType = {
   count: 0;
   things: Array<strings>;
 };
 
-type AppContextType = {};
+type ActionType =
+  | { type: "INC" }
+  | { type: "DEC" }
+  | { type: "ADD_THING"; thing: string }
+  | { type: "REMOVE_THING"; thing: string };
 
 type ProviderPropsType = {
-  children: any;
+  children: ReactNode;
 };
+
+const Context = createContext<ContextType>({});
 
 const initialState: AppStateType = {
   count: 0,
   things: []
 };
-
-const AppContext = createContext<AppContextType>({});
 
 const reducer = (state: AppStateType, action: ActionType) => {
   switch (action.type) {
@@ -37,19 +38,19 @@ const reducer = (state: AppStateType, action: ActionType) => {
         things: state.things.filter(thing => thing !== action.thing)
       };
     default:
-      return state;
+      throw new Error(`Invalid action ${action.type}`);
   }
 };
 
-export const Provider = (props: ProviderPropsType) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const AppProvider = (props: ProviderPropsType) => {
+  const [appState, appDispatch] = useReducer(reducer, initialState);
   return (
-    <AppContext.Provider value={[state, dispatch]}>
+    <Context.Provider value={{ appState, appDispatch }}>
       {props.children}
-    </AppContext.Provider>
+    </Context.Provider>
   );
 };
 
-export const useStore = () => {
-  return useContext(AppContext);
+export const useAppStore = () => {
+  return useContext(Context);
 };
