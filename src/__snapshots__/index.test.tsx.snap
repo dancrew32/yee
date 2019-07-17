@@ -19,6 +19,13 @@ Array [
     </a>
     <a
       className=""
+      href="/blender"
+      onClick={[Function]}
+    >
+      Blender
+    </a>
+    <a
+      className=""
       href="/products"
       onClick={[Function]}
     >

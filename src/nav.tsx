@@ -5,6 +5,7 @@ import clsx from "clsx";
 const pathToText = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
+  { href: "/blender", text: "Blender" },
   { href: "/products", text: "Products" }
 ];
 
