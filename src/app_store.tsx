@@ -4,7 +4,7 @@ type ContextType = {};
 
 type AppStateType = {
   count: 0;
-  things: Array<strings>;
+  things: Array<string>;
 };
 
 type ActionType =
@@ -24,7 +24,7 @@ const initialState: AppStateType = {
   things: []
 };
 
-const reducer = (state: AppStateType, action: ActionType) => {
+function reducer(state: AppStateType, action: ActionType) {
   switch (action.type) {
     case "INC":
       return { ...state, count: state.count + 1 };
@@ -40,17 +40,27 @@ const reducer = (state: AppStateType, action: ActionType) => {
     default:
       throw new Error(`Invalid action ${action.type}`);
   }
-};
+}
 
-export const AppProvider = (props: ProviderPropsType) => {
+function mapReducer(dispatch) {
+  return {
+    increment: () => dispatch({ type: "INC" }),
+    decrement: () => dispatch({ type: "DEC" }),
+    addThing: (thing: string) => dispatch({ type: "ADD_THING", thing }),
+    removeThing: (thing: string) => dispatch({ type: "REMOVE_THING", thing })
+  };
+}
+
+export function AppProvider(props: ProviderPropsType) {
   const [appState, appDispatch] = useReducer(reducer, initialState);
+  const appActions = mapReducer(appDispatch);
   return (
-    <Context.Provider value={{ appState, appDispatch }}>
+    <Context.Provider value={{ appState, appActions }}>
       {props.children}
     </Context.Provider>
   );
-};
+}
 
-export const useAppStore = () => {
+export function useAppStore() {
   return useContext(Context);
-};
+}

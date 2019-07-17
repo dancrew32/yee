@@ -28561,7 +28561,7 @@ var initialState = {
   things: []
 };
 
-var reducer = function reducer(state, action) {
+function reducer(state, action) {
   switch (action.type) {
     case "INC":
       return __assign({}, state, {
@@ -28588,24 +28588,56 @@ var reducer = function reducer(state, action) {
     default:
       throw new Error("Invalid action " + action.type);
   }
-};
+}
 
-exports.AppProvider = function (props) {
+function mapReducer(dispatch) {
+  return {
+    increment: function increment() {
+      return dispatch({
+        type: "INC"
+      });
+    },
+    decrement: function decrement() {
+      return dispatch({
+        type: "DEC"
+      });
+    },
+    addThing: function addThing(thing) {
+      return dispatch({
+        type: "ADD_THING",
+        thing: thing
+      });
+    },
+    removeThing: function removeThing(thing) {
+      return dispatch({
+        type: "REMOVE_THING",
+        thing: thing
+      });
+    }
+  };
+}
+
+function AppProvider(props) {
   var _a = react_1.useReducer(reducer, initialState),
       appState = _a[0],
       appDispatch = _a[1];
 
+  var appActions = mapReducer(appDispatch);
   return react_1["default"].createElement(Context.Provider, {
     value: {
       appState: appState,
-      appDispatch: appDispatch
+      appActions: appActions
     }
   }, props.children);
-};
+}
 
-exports.useAppStore = function () {
+exports.AppProvider = AppProvider;
+
+function useAppStore() {
   return react_1.useContext(Context);
-};
+}
+
+exports.useAppStore = useAppStore;
 },{"react":"node_modules/react/index.js"}],"src/about.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -28621,45 +28653,24 @@ var react_1 = __importDefault(require("react"));
 
 var app_store_tsx_1 = require("./app_store.tsx");
 
-var plus = function plus(appDispatch) {
-  appDispatch({
-    type: "INC"
-  });
-  appDispatch({
-    type: "ADD_THING",
-    thing: Math.random()
-  });
-};
-
-var minus = function minus(appDispatch, thing) {
-  appDispatch({
-    type: "DEC"
-  });
-  appDispatch({
-    type: "REMOVE_THING",
-    thing: thing
-  });
-};
-
 function About() {
   var _a = app_store_tsx_1.useAppStore(),
       appState = _a.appState,
-      appDispatch = _a.appDispatch;
+      appActions = _a.appActions;
 
   return react_1["default"].createElement("article", null, appState.count, appState.things.map(function (thing) {
     return react_1["default"].createElement("div", {
       key: thing
     }, thing, react_1["default"].createElement("button", {
       onClick: function onClick() {
-        appDispatch({
-          type: "fuck"
-        });
-        minus(appDispatch, thing);
+        appActions.removeThing(thing);
+        appActions.decrement();
       }
     }, "-"));
   }), react_1["default"].createElement("button", {
     onClick: function onClick() {
-      plus(appDispatch);
+      appActions.addThing(Math.random().toString());
+      appActions.increment();
     }
   }, "+"));
 }

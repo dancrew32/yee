@@ -2,18 +2,8 @@ import React from "react";
 
 import { useAppStore } from "./app_store.tsx";
 
-const plus = appDispatch => {
-  appDispatch({ type: "INC" });
-  appDispatch({ type: "ADD_THING", thing: Math.random() });
-};
-
-const minus = (appDispatch, thing) => {
-  appDispatch({ type: "DEC" });
-  appDispatch({ type: "REMOVE_THING", thing: thing });
-};
-
 export default function About() {
-  const { appState, appDispatch } = useAppStore();
+  const { appState, appActions } = useAppStore();
   return (
     <article>
       {appState.count}
@@ -23,8 +13,8 @@ export default function About() {
             {thing}
             <button
               onClick={() => {
-                appDispatch({ type: "fuck" });
-                minus(appDispatch, thing);
+                appActions.removeThing(thing);
+                appActions.decrement();
               }}
             >
               -
@@ -34,7 +24,8 @@ export default function About() {
       })}
       <button
         onClick={() => {
-          plus(appDispatch);
+          appActions.addThing(Math.random().toString());
+          appActions.increment();
         }}
       >
         +
