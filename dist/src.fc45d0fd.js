@@ -28498,7 +28498,25 @@ var _router = require("./router");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"src/home.tsx":[function(require,module,exports) {
+},{"./Link":"node_modules/hookrouter/dist/Link.js","./redirect":"node_modules/hookrouter/dist/redirect.js","./queryParams":"node_modules/hookrouter/dist/queryParams.js","./interceptor":"node_modules/hookrouter/dist/interceptor.js","./controlledInterceptor":"node_modules/hookrouter/dist/controlledInterceptor.js","./title":"node_modules/hookrouter/dist/title.js","./router":"node_modules/hookrouter/dist/router.js"}],"src/loading.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+exports.__esModule = true;
+
+var react_1 = __importDefault(require("react"));
+
+function Loading() {
+  return react_1["default"].createElement("div", null, "Loading...");
+}
+
+exports.Loading = Loading;
+},{"react":"node_modules/react/index.js"}],"src/home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28698,7 +28716,26 @@ function Products() {
 }
 
 exports["default"] = Products;
-},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js"}],"src/404.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js"}],"src/product.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+exports.__esModule = true;
+
+var react_1 = __importDefault(require("react"));
+
+function Product(props) {
+  var id = props.id;
+  return react_1["default"].createElement("div", null, "product ", id);
+}
+
+exports["default"] = Product;
+},{"react":"node_modules/react/index.js"}],"src/404.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -28735,6 +28772,8 @@ var react_1 = __importStar(require("react"));
 
 var hookrouter_1 = require("hookrouter");
 
+var loading_tsx_1 = require("./loading.tsx");
+
 var Home = react_1.lazy(function () {
   return Promise.resolve().then(function () {
     return __importStar(require("./home.tsx"));
@@ -28750,16 +28789,16 @@ var Products = react_1.lazy(function () {
     return __importStar(require("./products.tsx"));
   });
 });
+var Product = react_1.lazy(function () {
+  return Promise.resolve().then(function () {
+    return __importStar(require("./product.tsx"));
+  });
+});
 var NotFound = react_1.lazy(function () {
   return Promise.resolve().then(function () {
     return __importStar(require("./404.tsx"));
   });
 });
-
-var Loading = function Loading() {
-  return react_1["default"].createElement("div", null, "Loading...");
-};
-
 var routes = {
   "/": function _() {
     return react_1["default"].createElement(Home, null);
@@ -28772,19 +28811,21 @@ var routes = {
   },
   "/products/:id": function productsId(_a) {
     var id = _a.id;
-    return react_1["default"].createElement("div", null, "product ", id);
+    return react_1["default"].createElement(Product, {
+      id: id
+    });
   }
 };
 
 function AppRouter() {
   var routeResult = hookrouter_1.useRoutes(routes);
   return react_1["default"].createElement(react_1.Suspense, {
-    fallback: react_1["default"].createElement(Loading, null)
+    fallback: react_1["default"].createElement(loading_tsx_1.Loading, null)
   }, routeResult || react_1["default"].createElement(NotFound, null));
 }
 
 exports.AppRouter = AppRouter;
-},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","./home.tsx":"src/home.tsx","./about.tsx":"src/about.tsx","./products.tsx":"src/products.tsx","./404.tsx":"src/404.tsx"}],"node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","hookrouter":"node_modules/hookrouter/dist/index.js","./loading.tsx":"src/loading.tsx","./home.tsx":"src/home.tsx","./about.tsx":"src/about.tsx","./products.tsx":"src/products.tsx","./product.tsx":"src/product.tsx","./404.tsx":"src/404.tsx"}],"node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29012,7 +29053,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38413" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44961" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
