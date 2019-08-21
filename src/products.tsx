@@ -13,12 +13,10 @@ function Item(props) {
 export default function Products() {
   const items = new Array(50).fill();
   return (
-    <div className="blocks-container">
-      <div className="blocks">
-        {items.map((item, index) => (
-          <Item id={index} />
-        ))}
-      </div>
+    <div className="blocks">
+      {items.map((item, index) => (
+        <Item id={index} />
+      ))}
     </div>
   );
 }
