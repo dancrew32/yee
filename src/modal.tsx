@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect, ReactNode } from "react";
+
+import { useAppStore } from "./app_store.tsx";
 
 type PropsType = {
   show: boolean;
   onClose: () => void;
+  children: ReactNode;
 };
 
 export function Modal(props: PropsType) {
+  const { appState } = useAppStore();
+
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", appState.modalOpen);
+    // TODO: escape key listener on window
+  }, [appState.modalOpen]);
+
   if (!props.show) {
     return null;
   }
+
   return (
     <>
       <div className="modal-backdrop" onClick={props.onClose} />
@@ -17,7 +28,7 @@ export function Modal(props: PropsType) {
           X
         </button>
         <div className="modal-inner" autoFocus>
-          test
+          {props.children}
         </div>
       </div>
     </>

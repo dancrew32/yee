@@ -8,6 +8,7 @@ type AppStateType = {
 };
 
 type ActionType =
+  | { type: "MODAL_OPEN"; modalOpen: boolean }
   | { type: "INC" }
   | { type: "DEC" }
   | { type: "ADD_THING"; thing: string }
@@ -20,12 +21,15 @@ type ProviderPropsType = {
 const Context = createContext<ContextType>({});
 
 const initialState: AppStateType = {
+  modalOpen: false,
   count: 0,
   things: []
 };
 
 function reducer(state: AppStateType, action: ActionType) {
   switch (action.type) {
+    case "MODAL_OPEN":
+      return { ...state, modalOpen: action.modalOpen };
     case "INC":
       return { ...state, count: state.count + 1 };
     case "DEC":
@@ -44,6 +48,8 @@ function reducer(state: AppStateType, action: ActionType) {
 
 function mapReducer(dispatch) {
   return {
+    modalOpen: (modalOpen: boolean) =>
+      dispatch({ type: "MODAL_OPEN", modalOpen }),
     increment: () => dispatch({ type: "INC" }),
     decrement: () => dispatch({ type: "DEC" }),
     addThing: (thing: string) => dispatch({ type: "ADD_THING", thing }),
