@@ -8,13 +8,13 @@ const pathToText = [
   { href: "/products", text: "Products" }
 ];
 
-const getClasses = (a: string, b: string): string => {
+function getClasses(a: string, b: string): string {
   return clsx({
     active: a.split("/")[1] === b.split("/")[1]
   });
-};
+}
 
-export const Nav = () => {
+export function Nav() {
   const path = usePath();
   return (
     <nav>
@@ -29,4 +29,4 @@ export const Nav = () => {
       ))}
     </nav>
   );
-};
+}

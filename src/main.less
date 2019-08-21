@@ -42,6 +42,7 @@ nav {
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 2;
   a {
     padding: 10px;
     display: inline-block;
@@ -49,5 +50,33 @@ nav {
   }
   .active {
     color: @colorc;
+  }
+}
+
+.blocks {
+  margin: 0 auto;
+  column-count: 8;
+  column-gap: 1em;
+  @media only screen and (max-width: 768px) {
+    column-count: 6;
+  }
+  @media only screen and (max-width: 600px) {
+    column-count: 2;
+  }
+}
+
+.block {
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+  img {
+    display: block;
+    width: 100%;
+    transition: opacity 0.4s ease-in-out;
+    opacity: 1;
+  }
+  &:hover img {
+    opacity: 0.8;
   }
 }
