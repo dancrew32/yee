@@ -1,10 +1,24 @@
 import React from "react";
 import { A } from "hookrouter";
 
-export default function Products() {
+function Item(props) {
+  const { id } = props;
   return (
-    <article>
-      products <A href="/products/99">99</A>
-    </article>
+    <A class="block" href={`/products/${id}`}>
+      <img src={`https://source.unsplash.com/random/${id}`} alt="" />
+    </A>
+  );
+}
+
+export default function Products() {
+  const items = new Array(50).fill();
+  return (
+    <div className="blocks-container">
+      <div className="blocks">
+        {items.map((item, index) => (
+          <Item id={index} />
+        ))}
+      </div>
+    </div>
   );
 }

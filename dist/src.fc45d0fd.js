@@ -28709,10 +28709,28 @@ var react_1 = __importDefault(require("react"));
 
 var hookrouter_1 = require("hookrouter");
 
+function Item(props) {
+  var id = props.id;
+  return react_1["default"].createElement(hookrouter_1.A, {
+    "class": "block",
+    href: "/products/" + id
+  }, react_1["default"].createElement("img", {
+    src: "https://source.unsplash.com/random/" + id,
+    alt: ""
+  }));
+}
+
 function Products() {
-  return react_1["default"].createElement("article", null, "products ", react_1["default"].createElement(hookrouter_1.A, {
-    href: "/products/99"
-  }, "99"));
+  var items = new Array(50).fill();
+  return react_1["default"].createElement("div", {
+    className: "blocks-container"
+  }, react_1["default"].createElement("div", {
+    className: "blocks"
+  }, items.map(function (item, index) {
+    return react_1["default"].createElement(Item, {
+      id: index
+    });
+  })));
 }
 
 exports["default"] = Products;
@@ -29053,7 +29071,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44961" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41885" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
