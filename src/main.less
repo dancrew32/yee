@@ -1,10 +1,13 @@
 @import "./normalize.less";
 @import "./modal.less";
+@import "./block.less";
+@import "./typo.less";
+@import "./nav.less";
 @import (reference) "./vars.less";
 
 body {
-  background: @colorb;
-  color: @colore;
+  background: @background;
+  color: @text;
   font-family: Tahoma, Verdana, Segoe, sans-serif;
   overflow-y: scroll;
 }
@@ -12,75 +15,5 @@ body {
 article {
   padding: 10px;
   margin: 0 auto;
-  width: @articleWidth;
-}
-
-h1 {
-  font-size: 24px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 26.4px;
-}
-h3 {
-  font-size: 14px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 15.4px;
-}
-p,
-pre {
-  font-size: 14px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  line-height: 20px;
-}
-
-nav {
-  background-color: @colora;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-  a {
-    padding: 10px;
-    display: inline-block;
-    color: #fff;
-  }
-  .active {
-    color: @colorc;
-  }
-}
-
-.blocks {
-  margin: 0 auto;
-  column-count: 8;
-  column-gap: 1em;
-  @media only screen and (max-width: 768px) {
-    column-count: 6;
-  }
-  @media only screen and (max-width: 600px) {
-    column-count: 2;
-  }
-}
-
-.block {
-  background-color: @colorc;
-  display: inline-block;
-  margin: 0 0 1em;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 3px;
-  img {
-    display: block;
-    width: 100%;
-    transition: opacity 0.4s ease-in-out;
-    opacity: 1;
-  }
-  &:hover img {
-    opacity: 0.8;
-  }
+  width: @article_width;
 }

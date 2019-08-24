@@ -1,0 +1,24 @@
+@import (reference) "./vars.less";
+
+nav {
+  background-color: @nav_background;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: @z_index_nav;
+
+  //column-count: 4;
+  //column-gap: 0;
+
+  a {
+    padding: 10px;
+    display: inline-block;
+    //display: block;
+    color: @nav_item;
+		text-align: left;
+  }
+  .active {
+    color: @nav_item_active;
+  }
+}

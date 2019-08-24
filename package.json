@@ -8,8 +8,11 @@
   "dependencies": {
     "@types/hookrouter": "^2.2.1",
     "clsx": "^1.0.4",
+    "codemirror": "5.x",
     "hookrouter": "^1.2.3",
-    "react": "^15.0.0 || ^16.0.0",
+    "react": ">=15.5 <=16.x",
+    "react-codemirror": "^1.0.0",
+    "react-codemirror2": "^6.0.0",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {

@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState, useEffect, createRef } from "react";
+import clsx from "clsx";
 import { A } from "hookrouter";
 import { Modal } from "./modal.tsx";
 import { useAppStore } from "./app_store.tsx";
+import { Img } from "./img.tsx";
 
 function Item(props) {
+  const [loaded, setLoaded] = useState(false);
+  const [height, setHeight] = useState(0);
   const { id } = props;
+  const src = `https://source.unsplash.com/random/${id}`;
+  const href = `/products/${id}`;
+  const imgRef = createRef();
+
+  function onLoad(e) {
+    setLoaded(true);
+  }
+
   return (
-    <A className="block" href={`/products/${id}`}>
-      <img src={`https://source.unsplash.com/random/${id}`} alt="" />
+    <A className={clsx("block", { loaded })} href={href}>
+      <Img src={src} onLoad={onLoad} ref={imgRef} />
     </A>
   );
 }

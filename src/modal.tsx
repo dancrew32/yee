@@ -16,10 +16,6 @@ export function Modal(props: PropsType) {
     // TODO: escape key listener on window
   }, [appState.modalOpen]);
 
-  if (!props.show) {
-    return null;
-  }
-
   return (
     <>
       <div className="modal-backdrop" onClick={props.onClose} />
@@ -28,7 +24,7 @@ export function Modal(props: PropsType) {
           X
         </button>
         <div className="modal-inner" autoFocus>
-          {props.children}
+          {props.show && props.children}
         </div>
       </div>
     </>

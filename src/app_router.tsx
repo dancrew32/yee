@@ -7,13 +7,15 @@ const Home = lazy(() => import("./home.tsx"));
 const About = lazy(() => import("./about.tsx"));
 const Products = lazy(() => import("./products.tsx"));
 const Product = lazy(() => import("./product.tsx"));
+const Code = lazy(() => import("./code.tsx"));
 const NotFound = lazy(() => import("./404.tsx"));
 
 const routes = {
   "/": () => <Home />,
   "/about": () => <About />,
   "/products": () => <Products />,
-  "/products/:id": ({ id }) => <Product id={id} />
+  "/products/:id": ({ id }) => <Product id={id} />,
+  "/code": () => <Code />
 };
 
 export function AppRouter() {

@@ -5,7 +5,8 @@ import clsx from "clsx";
 const pathToText = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
-  { href: "/products", text: "Products" }
+  { href: "/products", text: "Products" },
+  { href: "/code", text: "Code" }
 ];
 
 function getClasses(a: string, b: string): string {
