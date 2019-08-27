@@ -14,7 +14,7 @@ clean:
 	rm -rf venv
 	rm -rf node_modules
 
-deps:
+deps: venv
 	yarn install
 	./venv/bin/pip3 install -r requirements.txt
 
