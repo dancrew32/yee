@@ -1,9 +1,9 @@
 import React from "react";
 
-import CodeMirror from 'react-codemirror';
-import 'codemirror/keymap/vim.js';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/twilight.css';
+import CodeMirror from "react-codemirror";
+import "codemirror/keymap/vim.js";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/twilight.css";
 
 type PropsType = {
   value: string;
@@ -12,9 +12,9 @@ type PropsType = {
 
 export function Editor(props: PropsType) {
   const options = {
-		keyMap: "vim",
+    keyMap: "vim",
     //mode: "html",
-    theme: "twilight",
+    theme: "twilight"
     //lineNumbers: true
   };
 
@@ -23,6 +23,11 @@ export function Editor(props: PropsType) {
   }
 
   return (
-    <CodeMirror autoFocus value={props.value} options={options} onChange={onChange} />
+    <CodeMirror
+      autoFocus
+      value={props.value}
+      options={options}
+      onChange={onChange}
+    />
   );
 }

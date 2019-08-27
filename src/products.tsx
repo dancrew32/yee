@@ -1,16 +1,18 @@
 import React, { useState, useEffect, createRef } from "react";
 import clsx from "clsx";
+
+import { get } from "./network.ts";
 import { A } from "hookrouter";
 import { Modal } from "./modal.tsx";
 import { useAppStore } from "./app_store.tsx";
 import { Img } from "./img.tsx";
+import { isScrollAtBottom } from "./dom.ts";
 
 function Item(props) {
+  const { product } = props;
   const [loaded, setLoaded] = useState(false);
-  const [height, setHeight] = useState(0);
-  const { id } = props;
-  const src = `https://source.unsplash.com/random/${id}`;
-  const href = `/products/${id}`;
+  const src = product.image;
+  const href = `/products/99`;
   const imgRef = createRef();
 
   function onLoad(e) {
@@ -24,23 +26,34 @@ function Item(props) {
   );
 }
 
+async function addProducts(appActions) {
+  const response = await get("http://localhost:5000/api/");
+  appActions.addProducts(response.content);
+}
+
 export default function Products() {
   const { appState, appActions } = useAppStore();
-  const items = new Array(50).fill();
+
+  function handleScroll() {
+    if (isScrollAtBottom(100)) {
+      console.log("fetch more");
+		  // TODO: products fetching next
+    }
+  }
+
+  useEffect(() => {
+    addProducts(appActions);
+		// TODO: products fetching initial return early
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="blocks">
-      <Modal
-        show={appState.modalOpen}
-        onClose={() => appActions.modalOpen(false)}
-      >
-        Testing a modal here man
-      </Modal>
-
-      <button type="button" onClick={() => appActions.modalOpen(true)}>
-        Open Modal
-      </button>
-      {items.map((item, index) => (
-        <Item key={index} id={index} />
+      {appState.products.map((product, index) => (
+        <Item key={index} product={product} />
       ))}
     </div>
   );

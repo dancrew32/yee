@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { get } from "./network.ts";
-import {Editor} from './editor.tsx';
+import { Editor } from "./editor.tsx";
 
 import "./editor.less";
 
@@ -18,7 +18,5 @@ export default function Code() {
     return null;
   }
 
-  return (
-    <Editor value={JSON.stringify(data, null, 2)} onChange={() => {}} />
-  );
+  return <Editor value={JSON.stringify(data, null, 2)} onChange={() => {}} />;
 }

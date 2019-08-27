@@ -2,17 +2,21 @@ import React, { createContext, useContext, useReducer, ReactNode } from "react";
 
 type ContextType = {};
 
+type ProductType = {
+  image: string;
+};
+
 type AppStateType = {
-  count: 0;
-  things: Array<string>;
+  products: Array<ProductType>;
+  productsInitialLoading: boolean;
+  productsNextLoading: boolean;
 };
 
 type ActionType =
   | { type: "MODAL_OPEN"; modalOpen: boolean }
-  | { type: "INC" }
-  | { type: "DEC" }
-  | { type: "ADD_THING"; thing: string }
-  | { type: "REMOVE_THING"; thing: string };
+  | { type: "ADD_PRODUCTS"; products: Array<ProductType> }
+  | { type: "SET_PRODUCTS_INITIAL_LOADING"; productsInitialLoading: boolean }
+  | { type: "SET_PRODUCTS_NEXT_LOADING"; productsNextLoading: boolean };
 
 type ProviderPropsType = {
   children: ReactNode;
@@ -22,25 +26,24 @@ const Context = createContext<ContextType>({});
 
 const initialState: AppStateType = {
   modalOpen: false,
-  count: 0,
-  things: []
+  products: [],
+  productsInitialLoading: false,
+  productsNextLoading: false
 };
 
 function reducer(state: AppStateType, action: ActionType) {
   switch (action.type) {
     case "MODAL_OPEN":
       return { ...state, modalOpen: action.modalOpen };
-    case "INC":
-      return { ...state, count: state.count + 1 };
-    case "DEC":
-      return { ...state, count: state.count - 1 };
-    case "ADD_THING":
-      return { ...state, things: [...state.things, action.thing] };
-    case "REMOVE_THING":
+    case "ADD_PRODUCTS":
+      return { ...state, products: state.products.concat(action.products) };
+    case "SET_PRODUCTS_INITIAL_LOADING":
       return {
         ...state,
-        things: state.things.filter(thing => thing !== action.thing)
+        productsInitialLoading: action.productsInitialLoading
       };
+    case "SET_PRODUCTS_NEXT_LOADING":
+      return { ...state, productsNextLoading: action.productsNextLoading };
     default:
       throw new Error(`Invalid action ${action.type}`);
   }
@@ -50,10 +53,15 @@ function mapReducer(dispatch) {
   return {
     modalOpen: (modalOpen: boolean) =>
       dispatch({ type: "MODAL_OPEN", modalOpen }),
-    increment: () => dispatch({ type: "INC" }),
-    decrement: () => dispatch({ type: "DEC" }),
-    addThing: (thing: string) => dispatch({ type: "ADD_THING", thing }),
-    removeThing: (thing: string) => dispatch({ type: "REMOVE_THING", thing })
+    addProducts: (products: Array<ProductType>) =>
+      dispatch({ type: "ADD_PRODUCTS", products }),
+    setProductsInitialLoading: (productsInitialLoading: boolean) =>
+      dispatch({
+        type: "SET_PRODUCTS_INITIAL_LOADING",
+        productsInitialLoading
+      }),
+    setProductsNextLoading: (productsNextLoading: boolean) =>
+      dispatch({ type: "SET_PRODUCTS_NEXT_LOADING", productsNextLoading })
   };
 }
 
