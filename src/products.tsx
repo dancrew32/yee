@@ -6,6 +6,7 @@ import { A } from "hookrouter";
 import { Modal } from "./modal.tsx";
 import { useAppStore } from "./app_store.tsx";
 import { Img } from "./img.tsx";
+import { Spinner } from "./spinner.tsx";
 import { isScrollAtBottom } from "./dom.ts";
 
 function Item(props) {
@@ -27,8 +28,17 @@ function Item(props) {
 }
 
 async function addProducts(appActions) {
+  appActions.setProductsInitialLoading(true);
   const response = await get("http://localhost:5000/api/");
   appActions.addProducts(response.content);
+  appActions.setProductsInitialLoading(false);
+}
+
+async function addMoreProducts(appActions) {
+  appActions.setProductsNextLoading(true);
+  const response = await get("http://localhost:5000/api/");
+  appActions.addProducts(response.content);
+  appActions.setProductsNextLoading(false);
 }
 
 export default function Products() {
@@ -36,14 +46,13 @@ export default function Products() {
 
   function handleScroll() {
     if (isScrollAtBottom(100)) {
-      console.log("fetch more");
-      // TODO: products fetching next
+      addMoreProducts(appActions);
     }
   }
 
   useEffect(() => {
+    appActions.setProductsInitialLoading(true);
     addProducts(appActions);
-    // TODO: products fetching initial return early
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -51,10 +60,14 @@ export default function Products() {
   }, []);
 
   return (
-    <div className="blocks">
-      {appState.products.map((product, index) => (
-        <Item key={index} product={product} />
-      ))}
-    </div>
+    <>
+      <Spinner show={appState.productsInitialLoading} top />
+      <div className="blocks">
+        {appState.products.map((product, index) => (
+          <Item key={index} product={product} />
+        ))}
+      </div>
+      <Spinner show={appState.productsNextLoading} bottom />
+    </>
   );
 }

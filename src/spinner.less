@@ -1,0 +1,35 @@
+@import (reference) "./vars.less";
+
+@size: 30px;
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  content: "";
+  box-sizing: border-box;
+  width: @spinner_size;
+  height: @spinner_size;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  animation: spinner 0.6s linear infinite;
+  transition: opacity 0.1s ease, max-height 0.05s ease;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+.spinner-show {
+  opacity: 1;
+  max-height: @spinner_size;
+}
+.spinner-top {
+  margin-top: 10px;
+}
+.spinner-bottom {
+  margin-bottom: 10px + @nav_estimated_height;
+}
