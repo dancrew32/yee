@@ -37,13 +37,13 @@ export default function Products() {
   function handleScroll() {
     if (isScrollAtBottom(100)) {
       console.log("fetch more");
-		  // TODO: products fetching next
+      // TODO: products fetching next
     }
   }
 
   useEffect(() => {
     addProducts(appActions);
-		// TODO: products fetching initial return early
+    // TODO: products fetching initial return early
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);

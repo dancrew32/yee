@@ -15,7 +15,7 @@ export default function About() {
   const { appState, appActions } = useAppStore();
 
   useEffect(() => {
-		fetchAbout(appActions);
+    fetchAbout(appActions);
   }, []);
 
   return (

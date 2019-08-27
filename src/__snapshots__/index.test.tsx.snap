@@ -24,6 +24,13 @@ Array [
     >
       Products
     </a>
+    <a
+      className=""
+      href="/code"
+      onClick={[Function]}
+    >
+      Code
+    </a>
   </nav>,
   <div>
     Loading...

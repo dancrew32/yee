@@ -34,5 +34,7 @@ function getDocHeight() {
 }
 
 export function isScrollAtBottom(distFromBottom: number = 0) {
-  return getDocHeight() == getScrollXY()[1] + window.innerHeight - distFromBottom;
+  return (
+    getDocHeight() == getScrollXY()[1] + window.innerHeight - distFromBottom
+  );
 }
