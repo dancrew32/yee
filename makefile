@@ -25,3 +25,7 @@ pretty:
 
 checkin: pretty test
 	git add -A && git commit && git push
+
+upgrade:
+	yarn upgrade
+
